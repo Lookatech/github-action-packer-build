@@ -1,0 +1,26 @@
+name: 'Packer build'
+author: 'Gustaf Elbander <gelbander@gmail.com>'
+description: 'Run packer build'
+inputs:
+  workingDir:
+    description: 'Working directory'
+    required: false
+    default: '.'
+  templateFileName:
+    description: 'Packer template file eg. "packer.json"'
+    required: false
+    default: 'packer.json'
+  varList:
+    description: 'Comma separated key-value pairs'
+    required: false
+    default: ''
+  varFileName:
+    description: 'var-file to use for packer build'
+    required: false
+    default: ''
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+branding:
+  icon: 'check-circle'
+  color: 'blue'

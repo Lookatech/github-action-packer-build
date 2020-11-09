@@ -32,8 +32,10 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      # build artifact
-      - name: Packer build
+      - name: Extract credentials from secret
+        run: echo ${{ secrets.SERVICE_ACCOUNT_BASE64 }} | base64 -d > service_account.json
+
+      - name: Build Artifact
         uses: gelbander/packer-github-action@v1
         with:
           workingDir: '.'
@@ -41,7 +43,6 @@ jobs:
           varList: 'git_sha=${{ github.sha }}'
         env:
           GOOGLE_APPLICATION_CREDENTIALS: service_account.json
-          SERVICE_ACCOUNT_BASE64: ${{ secrets.SERVICE_ACCOUNT_BASE64 }}
 
       # additional steps
 ```
@@ -57,7 +58,7 @@ jobs:
 
 #### `varList`
 
-Key-value pairs eg. (`key=value,key2=value2`) translates into:
+Key-value pairs eg. (`key=value,key2=value2` translates into:
 
 ```
 $ packer build \

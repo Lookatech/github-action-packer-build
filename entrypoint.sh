@@ -32,9 +32,9 @@ fi
 
 set +e
 # Execute command
-OPERATION="packer build ${VAR_ARGUMENTS}${VARFILE_ARGUMENTS} ${TEMPLATE_FILE_NAME}"
-echo "Executing: ${OPERATION}"
-${OPERATION}
-
+OPERATION_OUTPUT=$(sh -c "packer build ${VAR_ARGUMENTS} ${VARFILE_ARGUMENTS} ${TEMPLATE_FILE_NAME}" 2>&1)
+OPERATION_SUCCESS=$?
+echo "$OPERATION_OUTPUT"
 set -e
-exit 0
+
+exit $OPERATION_SUCCESS
